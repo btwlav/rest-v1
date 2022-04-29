@@ -1,6 +1,7 @@
 package com.vlad.rest.Resttest1.controllers;
 
 import com.vlad.rest.Resttest1.entities.Student;
+import com.vlad.rest.Resttest1.response.RestApiException;
 import com.vlad.rest.Resttest1.services.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,19 @@ public class StudentController {
         return studentService.list();
     }
 
+    @GetMapping("student/{id}")
+    public Student student(@PathVariable("id") long id) throws RestApiException {
+        return studentService.studentById(id);
+    }
+
     @PostMapping("student")
-    public List<Student> add(@RequestBody Student student) {
+    public List<Student> add(@RequestBody Student student) throws RestApiException {
         studentService.add(student);
         return studentService.list();
     }
 
     @DeleteMapping("student/{id}")
-    public List<Student> delete(@PathVariable("id") long id) {
+    public List<Student> delete(@PathVariable("id") long id) throws RestApiException {
         studentService.delete(id);
         return studentService.list();
     }
